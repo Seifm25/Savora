@@ -480,7 +480,7 @@ nav ul li a:hover {
     left: 0;
     width: 100%;
     height: 180px;
-    background-color: rgba(120, 11, 11, 0.35);
+    background-color: #780B0B;
     opacity: 0;
     transition: opacity 0.3s ease;
     pointer-events: none;
