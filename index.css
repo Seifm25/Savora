@@ -480,11 +480,12 @@ nav ul li a:hover {
     left: 0;
     width: 100%;
     height: 180px;
-    background-color: #780B0B;
+    background-color: rgba(167, 63, 63, 0.762);
     opacity: 0;
     transition: opacity 0.3s ease;
     pointer-events: none;
     border-radius: 8px 8px 0 0;
+    z-index: 1;
 }
 
 .product-card:hover::before {
