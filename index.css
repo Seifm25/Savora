@@ -3,6 +3,33 @@ html {
     scroll-behavior: smooth;
     font-size: 100%;
 }
+/* **************************************************************** */
+.card-back {
+    padding: 15px;
+}
+
+.quantity-title {
+    text-align: center;
+}
+
+.quantity-btn {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 16px;
+}
+
+.total-price {
+    margin-top: 8px;
+}
+
+
+
+
+
+
+
+/* ************************************************************* */
 
 body {
     box-sizing: border-box;
@@ -481,8 +508,8 @@ nav ul li a:hover {
     transition: 0.3s;
 }
 .product-card:hover .card-front {
-    background-color: #780B0B;
-    transform: translateY(-5px);
+    background-color: #7c0907;
+    transform: translateY(-6px);
 }
 .card-front img {
     width: 100%;
@@ -492,7 +519,6 @@ nav ul li a:hover {
     display: block;
     margin-bottom: 12px;
 }
-
 
 
 .card-header {
@@ -518,7 +544,6 @@ nav ul li a:hover {
     justify-content: space-between;
     align-items: center;
 }
-
 .rating {
     color: #ffb800;
     font-size: 12px;
@@ -616,14 +641,11 @@ nav ul li a:hover {
 }
 .cart-btn {
     width: 100%;
-    padding: 9px;
     border: none;
     border-radius: 7px;
-    background-color: #780B0B;
-    color: bisque;
+    background-color: #000;
     font-size: 13px;
     font-weight: bold;
-    cursor: pointer;
     transition: 0.2s;
 }
 .cart-btn:hover {

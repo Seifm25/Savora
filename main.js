@@ -1,5 +1,40 @@
 const filterButtons = document.querySelectorAll('.filter-btn');
 const productCards = document.querySelectorAll('.product-card');
+
+function filterProducts(selectedCategory) {
+
+  filterButtons.forEach(btn => {
+    btn.classList.remove('active');
+
+    if (btn.getAttribute('data-category') === selectedCategory) {
+      btn.classList.add('active');
+    }
+  });
+
+  productCards.forEach(card => {
+    const cardCategory = card.getAttribute('data-category');
+
+    if (selectedCategory === 'all' || selectedCategory === cardCategory) {
+      card.classList.remove('hide');
+    } else {
+      card.classList.add('hide');
+    }
+  });
+}
+filterButtons.forEach(button => {
+  button.addEventListener('click', () => {
+    const selectedCategory = button.getAttribute('data-category');
+    filterProducts(selectedCategory);
+  });
+});
+const params = new URLSearchParams(window.location.search);
+const categoryFromURL = params.get('category');
+
+if (categoryFromURL) {
+  filterProducts(categoryFromURL);
+}
+// const filterButtons = document.querySelectorAll('.filter-btn');
+// const productCards = document.querySelectorAll('.product-card');
 filterButtons.forEach(button => {
   button.addEventListener('click', () => {
     filterButtons.forEach(btn => btn.classList.remove('active'));
@@ -23,32 +58,7 @@ function saveCart(cart) {
   localStorage.setItem('savora_cart', JSON.stringify(cart));
 }
 
-document.querySelectorAll('.add-btn').forEach(btn => {
-  btn.addEventListener('click', () => {
-    const card = btn.closest('.product-card');
-    const name = card.querySelector('.product-title').innerText;
-    const price = parseFloat(card.querySelector('.price').innerText.replace('$', ''));
-    const img = card.querySelector('img').getAttribute('src');
-
-    let cart = getCart();
-    const existing = cart.find(item => item.name === name);
-
-    if (existing) {
-      existing.qty += 1;
-    } else {
-      cart.push({ name, price, img, qty: 1 });
-    }
-
-    saveCart(cart);
-
-    const originalText = btn.innerText;
-    btn.innerText = "Added ✓";
-    setTimeout(() => { btn.innerText = originalText; }, 1000);
-  });
-});
-
-
-// *****************************************
+// *******************************************************
 productCards.forEach(card => {
     const originalContent = card.innerHTML;
     const title = card.querySelector(".product-title").textContent;
@@ -72,45 +82,48 @@ productCards.forEach(card => {
             <h4 class="size-title">
                 Choose Size
             </h4>
-            <div class="size-options">
-                <button class="size-btn" data-price="9.99">
-                    Small
-                </button>
-                <button class="size-btn active" data-price="10.99">
-                    Medium
-                </button>
-                <button class="size-btn" data-price="12.99">
-                    Large
-                </button>
-            </div>
-            <h4 class="quantity-title">
-                Quantity
-            </h4>
-            <div class="quantity-box">
-                <button class="quantity-btn minus">
-                    −
-                </button>
-                <span class="quantity">
-                    1
-                </span>
-                <button class="quantity-btn plus">
-                    +
-                </button>
-            </div>
-        </div>
-        <div>
-            <div class="total-price">
-                $10.99
-            </div>
-            <button class="cart-btn">
-                Add to Cart
-            </button>
+           <div class="size-options">
+    <button class="size-btn" >
+        Small
+    </button>
+    <button class="size-btn active" >
+        Medium
+    </button>
+    <button class="size-btn" >
+        Large
+    </button>
+</div>
         </div>
     `;
     inner.appendChild(front);
     inner.appendChild(back);
     card.innerHTML = "";
     card.appendChild(inner);
+
+    // ربط زرار الـ Add بتاع الفرونت بعد ما اتبنى
+    const addBtn = front.querySelector('.add-btn');
+    addBtn.addEventListener('click', (event) => {
+        event.stopPropagation();
+        const name = card.querySelector('.product-title').innerText;
+        const price = parseFloat(card.querySelector('.price').innerText.replace('$', ''));
+        const img = card.querySelector('img').getAttribute('src');
+
+        let cart = getCart();
+        const existing = cart.find(item => item.name === name);
+
+        if (existing) {
+            existing.qty += 1;
+        } else {
+            cart.push({ name, price, img, qty: 1 });
+        }
+
+        saveCart(cart);
+
+        const originalText = addBtn.innerText;
+        addBtn.innerText = "Added ✓";
+        setTimeout(() => { addBtn.innerText = originalText; }, 1000);
+    });
+
     card.addEventListener("click", function (event) {
     if (event.target.closest("button")) {
         // أي زرار (Add أو غيره) ميعملش فليب خالص
@@ -127,7 +140,6 @@ productCards.forEach(card => {
         card.classList.remove("flipped");
     });
     const sizeButtons = back.querySelectorAll(".size-btn");
-    const totalPrice = back.querySelector(".total-price");
     let selectedPrice = 10.99;
     sizeButtons.forEach(button => {
         button.addEventListener("click", function (event) {
@@ -138,52 +150,7 @@ productCards.forEach(card => {
             button.classList.add("active");
             selectedPrice =
                 Number(button.dataset.price);
-            updateTotal();
         });
-    });
-    const plusButton = back.querySelector(".plus");
-    const minusButton = back.querySelector(".minus");
-    const quantityElement =
-        back.querySelector(".quantity");
-    let quantity = 1;
-    plusButton.addEventListener("click", function (event) {
-        event.stopPropagation();
-        quantity++;
-        quantityElement.textContent =
-            quantity;
-        updateTotal();
-    });
-    minusButton.addEventListener("click", function (event) {
-        event.stopPropagation();
-        if (quantity > 1) {
-            quantity--;
-            quantityElement.textContent =
-                quantity;
-            updateTotal();
-        }
-    });
-    function updateTotal() {
-        const total =
-            selectedPrice * quantity;
-        totalPrice.textContent =
-            `$${total.toFixed(2)}`;
-
-    }
-    const cartButton =
-        back.querySelector(".cart-btn");
-    cartButton.addEventListener("click", function (event) {
-        event.stopPropagation();
-        const selectedSize =
-            back.querySelector(".size-btn.active")
-                .textContent;
-        const total =
-            selectedPrice * quantity;
-        alert(
-            `${title}\n` +
-            `Size: ${selectedSize}\n` +
-            `Quantity: ${quantity}\n` +
-            `Total: $${total.toFixed(2)}`
-        );
     });
 });
 filterButtons.forEach(button => {
@@ -275,4 +242,3 @@ function showSuccessAlert() {
         setTimeout(() => alertBox.remove(), 500);
     }, 3000);
 }
-

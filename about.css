@@ -1,0 +1,86 @@
+.about-section {
+    padding: 40px 8%;
+}
+
+.about-container {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    position: relative;
+    border-radius: 20px;
+    padding: 30px;
+    overflow: hidden;
+    box-shadow: 0 4px 15px rgba(122, 35, 35, 0.4);
+}
+
+.about-text {
+    flex: 1;
+    z-index: 2;
+}
+
+.description {
+    color: bisque;
+    line-height: 1.6;
+    margin-bottom: 30px;
+    max-width: 480px;
+}
+
+.features-list {
+    display: flex;
+    flex-direction: column;
+    gap: 20px;
+}
+
+.feature-item {
+    display: flex;
+    align-items: center;
+    gap: 15px;
+}
+
+.feature-item i {
+    border: 1px solid #333;
+    padding: 10px;
+    border-radius: 50%;
+    color: bisque;
+    width: 40px;
+    height: 40px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+.feature-item span {
+    font-size: 16px;
+    color: bisque;
+}
+
+.about-image {
+    flex: 1.2;
+    display: flex;
+    justify-content: flex-end;
+    position: relative;
+}
+
+.image-wrapper {
+    position: relative;
+    width: 100%;
+    max-width: 500px;
+}
+
+.image-wrapper img {
+    width: 100%;
+    height: auto;
+    max-height: 420px;
+    object-fit: cover;
+    border-radius: 15px;
+    display: block;
+    box-shadow: 0 4px 15px rgba(122, 35, 35, 0.4);
+    box-sizing: border-box;
+    opacity: 0.7;
+    -webkit-mask-image: linear-gradient(to left, rgba(0,0,0,1) 60%, rgba(0,0,0,0) 100%),
+    linear-gradient(to top, rgba(0,0,0,1) 80%, rgba(0,0,0,0) 100%);
+    -webkit-mask-composite: source-in;
+    mask-image: linear-gradient(to left, rgba(0,0,0,1) 60%, rgba(0,0,0,0) 100%),
+                linear-gradient(to top, rgba(0,0,0,1) 80%, rgba(0,0,0,0) 100%);
+    mask-composite: intersect;
+}

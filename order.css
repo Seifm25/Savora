@@ -221,6 +221,7 @@
 
 .visa-form input {
     width: 100%;
+    box-sizing: border-box;
     background-color: #1a172c;
     border: 1px solid #780B0B;
     border-radius: 8px;
